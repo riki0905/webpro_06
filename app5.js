@@ -38,8 +38,19 @@ app.get("/janken", (req, res) => {
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
   // ここに勝敗の判定を入れる
+  let judgement = '';
+  if (hand === cpu) {
+    judgement = 'あいこ'; // 引き分け
+  } else if (
+    (hand === 'グー' && cpu === 'チョキ') 
+    (hand === 'チョキ' && cpu === 'パー') 
+    (hand === 'パー' && cpu === 'グー')
+  )
+
+
+
   // 今はダミーで人間の勝ちにしておく
-  let judgement = '勝ち';
+   judgement = '勝ち';
   win += 1;
   total += 1;
   const display = {
