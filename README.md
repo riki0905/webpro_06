@@ -9,6 +9,11 @@
 app5.js | プログラム本体
 public/janken.html | じゃんけんの開始画面
 
+1. app5.js を起動する
+1. Webブラウザでlocalhost:8080/public/janken.htmlにアクセスする
+1. 自分の手を入力する
+
+
 
 ```mermaid
 flowchart TD;
