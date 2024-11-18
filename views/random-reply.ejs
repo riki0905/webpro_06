@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ランダム返信</title>
+</head>
+<body>
+  <h1>あなたの入力: <%= userInput %></h1>
+  <h2>ランダムな返信: <%= reply %></h2>
+  
+  <!-- 入力フォーム -->
+  <form action="/random-reply" method="get">
+    <label for="input">何か入力してください:</label>
+    <input type="text" id="input" name="input" required>
+    <button type="submit">送信</button>
+  </form>
+</body>
+</html>

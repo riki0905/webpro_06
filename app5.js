@@ -64,23 +64,27 @@ app.get("/janken", (req, res) => {
 });
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
-// 文字数カウント機能
+
 app.get("/count", (req, res) => {
   const input = req.query.input || "";
   const length = input.length;
   res.render("count", { input, length });
 });
 
-// 偶数・奇数判定機能
-app.get("/evenodd", (req, res) => {
-  const number = req.query.number ? parseInt(req.query.number) : null;
-  let result = "";
 
-  if (!isNaN(number)) {
-    result = number % 2 === 0 ? "偶数" : "奇数";
-  } else if (req.query.number) {
-    result = "無効な入力";
-  }
+app.get("/random-reply", (req, res) => {
+  const userInput = req.query.input || '';  
+  const replies = [
+    "こんにちは！",
+    "どうしたの？",
+    "元気ですか？",
+    "いいですね！",
+    "そうなんですね！"
+  ];
 
-  res.render("evenodd", { number, result });
+  
+  const randomReply = replies[Math.floor(Math.random() * replies.length)];
+
+  res.send(`<h1>あなたの入力: ${userInput}</h1><h2>ランダムな返信: ${randomReply}</h2>`);
 });
+
