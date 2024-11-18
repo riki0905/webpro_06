@@ -23,6 +23,10 @@ app.get("/luck", (req, res) => {
   let luck = '';
   if( num==1 ) luck = '大吉';
   else if( num==2 ) luck = '中吉';
+  else if (num == 3) luck = '小吉';
+  else if (num == 4) luck = '吉';
+  else if (num == 5) luck = '末吉';
+  else if (num == 6) luck = '凶';
   console.log( 'あなたの運勢は' + luck + 'です' );
   res.render( 'luck', {number:num, luck:luck} );
 });
@@ -38,28 +42,33 @@ app.get("/janken", (req, res) => {
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
   // ここに勝敗の判定を入れる
+  
   let judgement = '';
   if (hand === cpu) {
     judgement = 'あいこ'; // 引き分け
   } else if (
-    (hand === 'グー' && cpu === 'チョキ') 
-    (hand === 'チョキ' && cpu === 'パー') 
+    (hand === 'グー' && cpu === 'チョキ') ||
+    (hand === 'チョキ' && cpu === 'パー') ||
     (hand === 'パー' && cpu === 'グー')
-  )
+  ) {
+    judgement = '勝ち';
+    win += 1; // 勝利数を増加
+  } else {
+    judgement = '負け';
+  }
 
 
 
-  // 今はダミーで人間の勝ちにしておく
-   judgement = '勝ち';
-  win += 1;
-  total += 1;
+  total += 1
+
+  
   const display = {
     your: hand,
     cpu: cpu,
     judgement: judgement,
     win: win,
-    total: total
-  }
+    total: total,
+  };
   res.render( 'janken', display );
 });
 
