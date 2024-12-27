@@ -1,0 +1,35 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>直方体の体積計算</title>
+</head>
+<body>
+  <h1>直方体の体積を計算</h1>
+  
+  <form action="/cuboid" method="get">
+    <label for="length">長さ (cm):</label>
+    <input type="text" id="length" name="length"><br><br>
+
+    <label for="width">幅 (cm):</label>
+    <input type="text" id="width" name="width"><br><br>
+
+    <label for="height">高さ (cm):</label>
+    <input type="text" id="height" name="height"><br><br>
+
+    <button type="submit">計算</button>
+  </form>
+
+  <% if (error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+
+  <% if (volume !== null) { %>
+    <p>体積: <%= volume %> cm³</p>
+  <% } %>
+
+</body>
+</html>

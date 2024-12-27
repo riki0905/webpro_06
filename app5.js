@@ -72,7 +72,6 @@ app.get("/janken", (req, res) => {
   res.render( 'janken', display );
 });
 
-app.listen(8080, () => console.log("Example app listening on port 8080!"));
 
 app.get("/count", (req, res) => {
   const input = req.query.input || "";
@@ -81,19 +80,42 @@ app.get("/count", (req, res) => {
 });
 
 
-app.get("/random-reply", (req, res) => {
-  const userInput = req.query.input || '';  
-  const replies = [
-    "こんにちは！",
-    "どうしたの？",
-    "元気ですか？",
-    "いいですね！",
-    "そうなんですね！"
-  ];
+// 直方体の体積計算の関数
+function calculateV(length, width, height) {
+  return length * width * height;
+}
 
-  
-  const randomReply = replies[Math.floor(Math.random() * replies.length)];
 
-  res.send(`<h1>あなたの入力: ${userInput}</h1><h2>ランダムな返信: ${randomReply}</h2>`);
+
+
+app.get("/", (req, res) => {
+  res.render("cuboid");
 });
 
+// 直方体の体積計算
+app.get("/cuboid", (req, res) => {
+  const length = parseFloat(req.query.length);
+  const width = parseFloat(req.query.width);
+  const height = parseFloat(req.query.height);
+
+  let volume = null;
+  let error = null;
+
+  // チェック
+  if (isNaN(length) || isNaN(width) || isNaN(height)) {
+    error = "長さ(cm)，幅(cm)，高さ(cm)を正しく入力してください．";
+  } else if (length <= 0 || width <= 0 || height <= 0) {
+    error = "長さ，幅，高さは正の数でなければなりません．";
+  } else {
+    // 体積を計算
+    volume = calculateV(length, width, height);
+  }
+
+  
+  res.render("cuboid", { volume, error });
+});
+
+
+
+
+app.listen(8080, () => console.log("Example app listening on port 8080!"));
