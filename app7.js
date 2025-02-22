@@ -4,7 +4,6 @@ const app = express();
 
 let bbs = [];  // 本来はDBMSを使用するが，今回はこの変数にデータを蓄える
 
-
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
@@ -106,92 +105,6 @@ app.post("/post", (req, res) => {
   res.json( {number: bbs.length } );
 });
 
-app.get("/bbs", (req,res) => {
-    console.log("GET /BBS");
-    res.json( {test: "GET /BBS" });
-});
-
-app.post("/bbs", (req,res) => {
-    console.log("POST /BBS");
-    res.json( {test: "POST /BBS"});
-})
-
-app.get("/bbs/:id", (req,res) => {
-    console.log( "GET /BBS/" + req.params.id );
-    res.json( {test: "GET /BBS/" + req.params.id });
-});
-
-app.put("/bbs/:id", (req,res) => {
-    console.log( "PUT /BBS/" + req.params.id );
-    res.json( {test: "PUT /BBS/" + req.params.id });
-});
-
-app.delete("/bbs/:id", (req,res) => {
-    console.log( "DELETE /BBS/" + req.params.id );
-    res.json( {test: "DELETE /BBS/" + req.params.id });
-});
+//-----------------------------------------------------------------------------------------
 
 
-// 返信機能
-app.post("/reply", (req, res) => {
-  const id = Number(req.body.id);
-  const message = req.body.message;
-  if (bbs[id]) {
-    const reply = { name: "返信", message: message };
-    bbs.splice(id + 1, 0, reply);  // 投稿の次にレスを追加
-    res.json({ success: true });
-  } else {
-    res.status(400).json({ error: "Invalid post ID" });
-  }
-});
-
-// 検索機能
-app.post("/search", (req, res) => {
-  const query = req.body.query.toLowerCase();
-  const results = bbs.filter(post =>
-    post.name.toLowerCase().includes(query) ||
-    post.message.toLowerCase().includes(query)
-  );
-  res.json({ results: results });
-});
-
-
-app.post("/post", (req, res) => {
-  const name = req.body.name;
-  const message = req.body.message;
-  console.log([name, message]);
-  // 投稿時にIDを付与
-  const newPost = {
-      id: bbs.length,
-      name: name,
-      message: message
-  };
-  bbs.push(newPost);
-  res.json({ number: bbs.length });
-});
-
-
-app.post("/edit", (req, res) => {
-  const id = Number(req.body.id);
-  const message = req.body.message;
-
-  console.log("対象ID:", id);
-  console.log("編集後メッセージ:", message);
-
-  const post = bbs.find(post => post.id === id);
-  if (post) {
-      post.message = message;
-      res.json({ success: true });
-  } else {
-      res.status(404).json({ error: "投稿が見つかりませんでした。" });
-  }
-});
-
-
-
-
-
-
-
-
-app.listen(8080, () => console.log("Example app listening on port 8080!"));
